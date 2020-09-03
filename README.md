@@ -47,8 +47,6 @@ https://developer.android.com/studio
 
 2. 하단 상태 바에 `Gradle: Build...` 라는 상태 메세지가 사라질 때까지 기다립니다.
 
-3. `./src/main/java/cyou/joiplay/rpgm/MainActivity.java` 파일을 새로운 [MainActivity.java](https://github.com/jubin-park/build-apk-with-mkxp/blob/master/MainActivity.java) 파일로 덮어씌웁니다.
-
 ## SDK 툴 설치
 상단 메뉴 `Tools` > `SDK Manager` 를 누릅니다.
 
@@ -61,6 +59,8 @@ https://developer.android.com/studio
 - [x] Google Play APK Expansion library
 - [x] Google Play Licensing Library
 - [x] Intel x86 Emulator Accelerator (HAXM installer)
+
+## 에??
 
 ## 에뮬레이터 추가하기
 상단 메뉴 `Tools` > `AVD Manager` 를 누릅니다. 이것은 Android 가상 기기 매니저 창을 띄웁니다.
@@ -89,7 +89,7 @@ https://developer.android.com/studio
 
 ## 게임 프로젝트 파일 추가하기
 
-1. `.\app\src\main\assets` 폴더로 이동합니다.
+1. `./app/src/main/assets` 폴더로 이동합니다.
 2. 게임 프로젝트의 `Game.ini` 파일을 1번의 주소로 복사합니다.
 3. 게임 프로젝트를 통째로 `Game.zip` 라는 이름으로 **압축**하여 1번의 주소로 복사합니다.
   
@@ -99,9 +99,11 @@ https://developer.android.com/studio
 
 ## 게임 환경 설정하기 (선택 사항)
 
-1. `.\rpgm\src\main\assets` 폴더로 이동합니다.
-2. `mkxp.conf` 파일은 게임 실행 시 여기에 저장된 세팅값을 실행합니다. `RTP` 속성값은 반드시 `Game.zip` 으로 설정하세요.
-3. `prewrite.rb` 파일은 게임이 실행하기 전, 미리 실행할 루비 스크립트를 넣는 곳입니다.
+1. `./rpgm/src/main/assets` 폴더로 이동합니다.
+* `mkxp.conf` 파일은 게임 실행 시 여기에 저장된 세팅값을 실행합니다.
+  * `RTP` 속성값은 반드시 `Game.zip` 으로 설정하세요.
+  * `RTP=OBB_PATH` 라인은 동작하지 않습니다. 지우세요.
+* `prewrite.rb` 파일은 게임이 실행하기 전, 미리 실행할 루비 스크립트를 넣는 곳입니다.
 
 ## 어플리케이션 아이디와 게임 버전 수정하기
 
@@ -181,12 +183,141 @@ https://developer.android.com/studio
 
 5. - [x] Remember passwords 에 체크합니다. 다음 `Next`를 누릅니다.
 
-6. `.\app\release` 에 `app-release.apk` 가 만들어졌는지 확인합니다.
+![android-studio-setting-10](./img/android-studio-setting-10.png)
+
+6. release, V1, V2 선택 후 `Finish`를 누릅니다.
+7. `./app/release` 에 `app-release.apk` 가 만들어졌는지 확인합니다.
+
+# 구글 플레이 스토어 출시를 고민한다면
+## 시작하기 전
+* 먼저 플레이 스토어 개발자 등록 신청을 해야 합니다. 가격은 $25 이며, 유효기간은 영구 지속됩니다.
+* apk 파일의 용량이 100MB를 넘는지 확인하세요. 100MB가 넘는다면, 추가적인 작업이 필요합니다.
+* apk에서 게임 프로젝트 파일을 분리해 따로 obb 파일을 만들어 업로드하는 것입니다. 즉, apk 파일과 obb 파일 두 개를 업로드 하는 방법입니다.
+* 이 링크에서 자세한 내용을 알 수 있습니다. https://developer.android.com/google/play/expansion-files
+
+## 안드로이드 스튜디오 세팅
+1. `./src/main/java/cyou/joiplay/rpgm/MainActivity.java` 파일을 새로운 [MainActivity.java](https://github.com/jubin-park/build-apk-with-mkxp/blob/master/MainActivity.java) 파일로 덮어씌웁니다.
+2. Android SDK 창을 열어, Android SDK 경로를 클립보드에 복사해서 메모장에 3줄 붙여넣습니다.
+
+```
+(SDK 경로)
+(SDK 경로)
+(SDK 경로)
+```
+3. 각 줄에 아래의 경로를 덧붙입니다.
+```
+(SDK 경로)/extras/google/market_apk_expansion/downloader_library
+(SDK 경로)/extras/google/market_apk_expansion/zip_file
+(SDK 경로)/extras/google/market_licensing/library
+```
+
+4. `(SDK 경로)/extras/google/market_apk_expansion/downloader_library/project.properties` 파일을 메모장으로 열어서 아래의 코드 라인을 지우고 저장합니다.
+```properties
+android.library.reference.1=../market_licensing
+```
+
+5. 메뉴 `File` > `New` > `Import Module...` 를 누릅니다.
+6. Source directory에 한 줄씩 경로를 넣고 `Next` 를 누른 뒤, `Finish`를 누릅니다.
+
+![android-studio-setting-11](./img/android-studio-setting-11.png)
+
+7. `downloader_library`, `library`, `zip_file` 모듈이 추가됐는지 확인합니다.
+8. 메뉴 `File` > `Project Structure` 를 누릅니다.
+
+![android-studio-setting-12](./img/android-studio-setting-12.png)
+
+9. `Dependencies` > `downloader_library` > `+` > `Module Dependency` 를 누릅니다.
+
+![android-studio-setting-13](./img/android-studio-setting-13.png)
+- [x] library 에 체크 후 `OK`를 누릅니다.
+
+![android-studio-setting-14](./img/android-studio-setting-14.png)
+10. `Dependencies` > `app` > `+` > `Module Dependency` 를 누릅니다.
+
+![android-studio-setting-15](./img/android-studio-setting-15.png)
+
+11. 
+- [x] downloader_library
+- [x] library
+- [x] zip_file
+
+위 3개 모듈에 체크하고 `OK`를 누릅니다.
+
+12. 위와 같은 에러 메세지가 나오면 `Remove minSdkVersion` 를 누릅니다.
+```
+The minSdk version should not be declared in the android manifest file. You can move the version from the manifest to the defaultConfig in the build.gradle file.
+Remove minSdkVersion and sync project
+Affected Modules: downloader_library, library, zip_file
+```
+
+![android-studio-setting-16](./img/android-studio-setting-16.png)
+
+13. 오류나는 부분을 하나씩 찾아가서 빨간색으로 표시한 부분을 지웁니다.
+
+```xml
+<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="15"/>
+
+=>
+
+<uses-sdk android:targetSdkVersion="15"/>
+```
+
+14.  빌드를 시도합니다.
+
+![android-studio-setting-17](./img/android-studio-setting-17.png)
+
+* *MainActivity.java* 14줄에 에러가 나면 `zip_file` 의존성 추가합니다.
+
+## obb 파일 만들기
+
+1. `./app/src/main/assets` 폴더로 이동합니다.
+2. `Game.zip` 파일을 **지웁니다**.
+3. 이 폴더에는 `Game.ini` 파일만 남아있으면 됩니다.
+
+![obb-1](./img/obb-1.png)
+
+4. 게임 프로젝트 폴더에 반디집 기준 `반디집으로 압축하기` 를 누릅니다.
+
+![obb-2](./img/obb-2.png)
+
+5. 파일 이름을 `main.<버전번호>.<패키지아이디>.obb` 파일로 저장합니다.
+   * 예: 버전 번호가 `123`, 패키지 아이디가 `com.awesome.mygame` 이라면 파일 이름은 `main.123.com.awesome.mygame.obb`
+   * 반드시 압축 방법은 `압축하지 않음`으로 선택해야 합니다.
+   * `압축 시작`을 누릅니다.
+
+![obb-3](./img/obb-3.png)
+
+6. obb 파일을 에뮬레이터에 드래그 앤 드롭합니다.
+
+7. ▶를 눌러 에뮬레이터와 게임을 실행합니다. obb 폴더를 자동 생성하도록 하기 위함입니다. Unable to open 'Data/Scripts.rxdata' 메세지가 나오면 OK 를 눌러 종료합니다.
+
+8. 파일 관리자 어플을 실행합니다.
+
+![obb-5](./img/obb-5.png)
+
+9. Downloads 폴더로 이동합니다.
+
+![obb-4](./img/obb-4.png)
+
+10. 메뉴에서 `Show internal storage` 를 누릅니다.
+
+![obb-6](./img/obb-6.png)
+
+11. `Move to...` 를 누릅니다.
+
+![obb-7](./img/obb-7.png)
+![obb-8](./img/obb-8.png)
+
+12. `내부 폴더` > `Android` > `obb` > `패키지 아이디` 폴더로 이동해서 `MOVE` 를 누릅니다.
+
+13. 게임을 실행합니다.
+
+## 업로드 및 출시하기
+구글 플레이 스토어에서 `app-release.apk` 파일과 obb 파일을 업로드 합니다. 여기서는 자세히 다루지 않겠습니다.
+
+# 버그 및 이슈
+* obb 파일 사용 시, 게임을 실행할 때마다 obb 파일을 internal storage에 복사하므로 용량이 클 수록 오버헤드가 심각해짐
+  * 업데이트 때마다 최초 한 번만 복사하는 아이디어 필요
 
 # 감사의 말
 템플릿 파일을 제공해주신 joiPlay 개발자님과 파일을 전달해주신 눈물향수님께 감사의 인사를 드립니다.
-
-# 구글 플레이스토어 출시를 고민한다면
-apk 릴리즈 버전 빌드에 성공했다면, 스토어 개발자 등록을 신청하세요.
-
-게임 프로젝트를 zip 파일로 보통 압축했을 때, 용량이 100MB를 넘는지 확인하세요. 100MB가 넘는다면, 추가적인 작업이 필요합니다.
