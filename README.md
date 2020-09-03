@@ -28,7 +28,7 @@
 # 프로젝트 파일 다운로드
 링크: https://www.dropbox.com/s/3e5nymzv92yyv95/mkxpandroidlibrary.7z?dl=0
 
-mkxpandroidlibrary.7z 파일의 압축을 풉니다.
+*mkxpandroidlibrary.7z* 파일의 압축을 풉니다.
 
 # 안드로이드 스튜디오
 ## 다운로드 및 설치
@@ -43,9 +43,11 @@ https://developer.android.com/studio
 
 ![android-studio-setting-2](./img/android-studio-setting-2.png)
 
-압축을 풀은 프로젝트 폴더를 선택하고 `OK`를 누릅니다.
+1. 압축을 풀은 프로젝트 폴더를 선택하고 `OK`를 누릅니다.
 
-하단 상태 바에 `Gradle: Build...` 라는 상태 메세지가 사라질 때까지 기다립니다.
+2. 하단 상태 바에 `Gradle: Build...` 라는 상태 메세지가 사라질 때까지 기다립니다.
+
+3. `./src/main/java/cyou/joiplay/rpgm/MainActivity.java` 파일을 새로운 [MainActivity.java](https://github.com/jubin-park/build-apk-with-mkxp/blob/master/MainActivity.java) 파일로 덮어씌웁니다.
 
 ## SDK 툴 설치
 상단 메뉴 `Tools` > `SDK Manager` 를 누릅니다.
@@ -156,7 +158,32 @@ https://developer.android.com/studio
 ## 테스트하기
 * `Run` (초록색 ▶ 모양 버튼)을 누르면 에뮬레이터와 어플리케이션이 자동으로 실행됩니다.
 
-# 감사
+## 배포용 apk 파일 만들기
+1. 메뉴 `Build` > `Generate Signed Bundle / APK...` 를 누릅니다.
+
+![android-studio-setting-5](./img/android-studio-setting-5.png)
+
+2. `APK` 선택 후 `Next`를 누릅니다.
+
+![android-studio-setting-6](./img/android-studio-setting-6.png)
+
+3. `Create new...` 를 누릅니다. 키스토어 만드는 작업은 최초 1회만 하면 됩니다.
+  
+![android-studio-setting-7](./img/android-studio-setting-7.png)
+
+4. 키스토어 저장경로, 비밀번호, 아이디, 각종 정보들을 입력하고 `OK`를 누릅니다.
+
+![android-studio-setting-8](./img/android-studio-setting-8.png)
+
+* 이런 오류 메세지가 뜨는 경우가 있는데 무시하세요.
+
+![android-studio-setting-9](./img/android-studio-setting-9.png)
+
+5. - [x] Remember passwords 에 체크합니다. 다음 `Next`를 누릅니다.
+
+6. `.\app\release` 에 `app-release.apk` 가 만들어졌는지 확인합니다.
+
+# 감사의 말
 템플릿 파일을 제공해주신 joiPlay 개발자님과 파일을 전달해주신 눈물향수님께 감사의 인사를 드립니다.
 
 # 구글 플레이스토어 출시를 고민한다면
