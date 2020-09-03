@@ -324,5 +324,5 @@ Affected Modules: downloader_library, library, zip_file
   - [x] 업데이트 때마다 최초 한 번만 복사하는 아이디어 필요
     - [x] `VERSION.txt` 로 버전 확인하는 방법으로 해결
 
-# 감사의 말
-템플릿 파일을 제공해주신 joiPlay 개발자님과 파일을 전달해주신 눈물향수님께 감사의 인사를 드립니다.
+# 크레딧
+저에게 도움을 주신 *눈물향수*님, 템플릿 파일을 제공해주신 *joiPlay 개발자*님, 그리고 *mkxp 개발자 여러분*께 감사의 인사를 드립니다.
