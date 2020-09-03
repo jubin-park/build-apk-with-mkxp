@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.android.vending.expansion.zipfile.APKExpansionSupport;
 import com.android.vending.expansion.zipfile.ZipResourceFile;
 import com.joiplay.joipad.JoiPad;
 
@@ -18,7 +19,7 @@ import java.io.*;
 
 public class MainActivity extends SDLActivity {
 
-    private static final boolean OBB_MODE = false;
+    private static final boolean OBB_MODE = true;
     private static final String GAME_FILE_NAME = "Game.zip";
     private static final String INI_FILE_NAME = "Game.ini";
     private static final String CONF_FILE_NAME = "mkxp.conf";
@@ -58,14 +59,11 @@ public class MainActivity extends SDLActivity {
 
             File obbFile = new File(obbFolder, getMainObbFileName(info.versionCode));
             try {
-
-                File gameFile = new File(GAME_FOLDER, GAME_FILE_NAME);
-                if (!gameFile.exists() || obbFile.length() != gameFile.length()) {
-                    //ZipResourceFile zipFile = APKExpansionSupport.getAPKExpansionZipFile(getContext(), info.versionCode, 0);
-                    ZipResourceFile zipFile = new ZipResourceFile(obbFile.getAbsolutePath());
-                    String src = String.format("%s%s%s", getMainObbFileName(info.versionCode), File.separator, GAME_FILE_NAME);
-                    createZipFile(zipFile.getInputStream(src));
-                }
+                //ZipResourceFile zipFile = APKExpansionSupport.getAPKExpansionZipFile(getContext(), info.versionCode, 0);
+                ZipResourceFile zipFile = new ZipResourceFile(obbFile.getAbsolutePath());
+                // BUG: Why src is fixed?
+                final String src = "main.1.cyou.joiplay.mkxp.obb/Game.zip"; // String.format("%s%s%s", getMainObbFileName(info.versionCode), File.separator, GAME_FILE_NAME);
+                createZipFile(zipFile.getInputStream(src));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -98,7 +96,7 @@ public class MainActivity extends SDLActivity {
             String line;
             while ((line = br.readLine()) != null) {
                 fos.write((line
-                        .replace("{GAME_FOLDER}", GAME_FOLDER))
+                        .replace("GAME_FOLDER", GAME_FOLDER))
                         .getBytes());
                 fos.write('\n');
             }
