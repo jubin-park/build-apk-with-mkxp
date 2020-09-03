@@ -23,7 +23,7 @@
  
 * 폴더/파일명에 한글이 들어간다면 1바이트 문자인 영어 또는 숫자, 특수문자 등으로 바꾸세요.
 
-* 안드로이드에서는 RTP 폴더 위치를 못 찾습니다. 테스트 삼아 RTP를 사용할 때에는 게임 프로젝트에 합쳐서 사용합니다.
+* 안드로이드에서는 RTP 폴더 위치를 못 찾습니다. 테스트 삼아 RTP를 사용할 때에는 게임 프로젝트에 합쳐서 사용하세요.
 
 # 프로젝트 파일 다운로드
 링크: https://www.dropbox.com/s/3e5nymzv92yyv95/mkxpandroidlibrary.7z?dl=0
@@ -60,8 +60,6 @@ https://developer.android.com/studio
 - [x] Google Play Licensing Library
 - [x] Intel x86 Emulator Accelerator (HAXM installer)
 
-## 에??
-
 ## 에뮬레이터 추가하기
 상단 메뉴 `Tools` > `AVD Manager` 를 누릅니다. 이것은 Android 가상 기기 매니저 창을 띄웁니다.
 
@@ -97,7 +95,7 @@ https://developer.android.com/studio
 ![android-studio-setting-3](./img/android-studio-setting-3.png)
 * **반드시** 반디집 기준으로 `Game.zip으로 압축하기`를 선택해야 합니다. `반디집으로 압축하기`로 압축하면 파일을 인식하지 못합니다. 알집도 마찬가지입니다.
 
-## 게임 환경 설정하기 (선택 사항)
+## 게임 환경 설정하기
 
 1. `./rpgm/src/main/assets` 폴더로 이동합니다.
 * `mkxp.conf` 파일은 게임 실행 시 여기에 저장된 세팅값을 실행합니다.
@@ -325,4 +323,4 @@ Affected Modules: downloader_library, library, zip_file
     - [x] `VERSION.txt` 로 버전 확인하는 방법으로 해결
 
 # 크레딧
-저에게 도움을 주신 *눈물향수*님, 템플릿 파일을 제공해주신 *joiPlay 개발자*님, 그리고 *mkxp 개발자 여러분*께 감사의 인사를 드립니다.
+저에게 도움을 주신 *눈물향수*님, 템플릿 파일을 제공해주신 *joiPlay* 개발자님, 그리고 *mkxp* 개발자 여러분께 감사의 인사를 드립니다.
