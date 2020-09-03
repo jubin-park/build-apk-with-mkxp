@@ -271,12 +271,16 @@ Affected Modules: downloader_library, library, zip_file
 ## obb 파일 만들기
 
 1. `./app/src/main/assets` 폴더로 이동합니다.
-2. `Game.zip` 파일을 **지웁니다**.
-3. 이 폴더에는 `Game.ini` 파일만 남아있으면 됩니다.
+2. `Game.zip` 파일을 다른 곳으로 이동시키거나 지웁니다.
+   * 이 폴더에는 `Game.ini` 파일만 남아있으면 됩니다.
 
+3. `VERSION.txt` 파일을 새로 만들어서 그 안에 버전 번호를 적고 저장합니다. 버전 번호가 123 이라면 그대로 적습니다.
+```
+123
+```
 ![obb-1](./img/obb-1.png)
 
-4. 게임 프로젝트 폴더에 반디집 기준 `반디집으로 압축하기` 를 누릅니다.
+4. `Game.zip` 과 `VERSION.txt` 을 반디집 기준 `반디집으로 압축하기` 를 누릅니다.
 
 ![obb-2](./img/obb-2.png)
 
@@ -310,14 +314,15 @@ Affected Modules: downloader_library, library, zip_file
 
 12. `내부 폴더` > `Android` > `obb` > `패키지 아이디` 폴더로 이동해서 `MOVE` 를 누릅니다.
 
-13. 게임을 실행합니다.
+13. 게임이 잘 실행되는지 확인합니다.
 
 ## 업로드 및 출시하기
-구글 플레이 스토어에서 `app-release.apk` 파일과 obb 파일을 업로드 합니다. 여기서는 자세히 다루지 않겠습니다.
+구글 플레이 스토어에서 `app-release.apk` 파일과 obb 파일을 업로드 합니다. 여기서는 자세히 다루지 않습니다. [여기](https://developer.android.com/google/play/expansion-files)를 눌러 참고하세요.
 
 # 버그 및 이슈
 * obb 파일 사용 시, 게임을 실행할 때마다 obb 파일을 internal storage에 복사하므로 용량이 클 수록 오버헤드가 심각해짐
-  * 업데이트 때마다 최초 한 번만 복사하는 아이디어 필요
+  - [x] 업데이트 때마다 최초 한 번만 복사하는 아이디어 필요
+    - [x] `VERSION.txt` 로 버전 확인하는 방법으로 해결
 
 # 감사의 말
 템플릿 파일을 제공해주신 joiPlay 개발자님과 파일을 전달해주신 눈물향수님께 감사의 인사를 드립니다.

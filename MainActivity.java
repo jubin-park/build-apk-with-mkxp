@@ -2,6 +2,7 @@ package cyou.joiplay.rpgm;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ public class MainActivity extends SDLActivity {
     private static final String GAME_FILE_NAME = "Game.zip";
     private static final String INI_FILE_NAME = "Game.ini";
     private static final String CONF_FILE_NAME = "mkxp.conf";
+    private static final String VERSION_FILE_NAME = "VERSION.txt";
     private static String GAME_FOLDER;
     private static String OBB_FOLDER;
     private static String CONF_FILE_PATH;
@@ -61,9 +63,22 @@ public class MainActivity extends SDLActivity {
             try {
                 //ZipResourceFile zipFile = APKExpansionSupport.getAPKExpansionZipFile(getContext(), info.versionCode, 0);
                 ZipResourceFile zipFile = new ZipResourceFile(obbFile.getAbsolutePath());
-                // BUG: Why src is fixed?
-                final String src = "main.1.cyou.joiplay.mkxp.obb/Game.zip"; // String.format("%s%s%s", getMainObbFileName(info.versionCode), File.separator, GAME_FILE_NAME);
-                createZipFile(zipFile.getInputStream(src));
+
+                File versionFile = new File(GAME_FOLDER, VERSION_FILE_NAME);
+                if (!versionFile.exists()) {
+                    unzipFile(zipFile.getInputStream(GAME_FILE_NAME), GAME_FILE_NAME);
+                } else {
+                    BufferedReader br = new BufferedReader(new FileReader(GAME_FOLDER + File.separator + VERSION_FILE_NAME));
+                    String line = br.readLine();
+                    if (line == null || !line.trim().equals(String.valueOf(info.versionCode))) {
+                        unzipFile(zipFile.getInputStream(GAME_FILE_NAME), GAME_FILE_NAME);
+                    }
+                    br.close();
+                }
+                unzipFile(zipFile.getInputStream(VERSION_FILE_NAME), VERSION_FILE_NAME);
+
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -166,8 +181,8 @@ public class MainActivity extends SDLActivity {
         return super.dispatchKeyEvent(event);
     }
 
-    private void createZipFile(InputStream inputStream) {
-        File file = new File(GAME_FOLDER, GAME_FILE_NAME);
+    private void unzipFile(InputStream inputStream, String dest) {
+        File file = new File(GAME_FOLDER, dest);
         try {
             OutputStream outputStream = new FileOutputStream(file);
             int len = 0;
@@ -176,7 +191,7 @@ public class MainActivity extends SDLActivity {
             while ((len = inputStream.read(buf)) > 0) {
                 outputStream.write(buf, 0, len);
             }
-
+            
             outputStream.close();
             inputStream.close();
         } catch (FileNotFoundException e) {
